@@ -1,0 +1,131 @@
+{
+    "Routes": [
+
+        {
+            "DownstreamPathTemplate": "/api/v1/product",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/Catalog",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/product/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/Catalog/{id}",
+            "UpstreamHttpMethod": [ "GET", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/product/GetProductByCategory/{category}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/Catalog/GetProductByCategory/{category}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+
+
+        {
+            "DownstreamPathTemplate": "/api/basket/{userName}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8001
+                }
+            ],
+            "UpstreamPathTemplate": "/Basket/{userName}",
+            "UpstreamHttpMethod": [ "GET", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/basket",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8001
+                }
+            ],
+            "UpstreamPathTemplate": "/Basket",
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+
+        {
+            "DownstreamPathTemplate": "/api/v1/discount/{productName}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 25570
+                }
+            ],
+            "UpstreamPathTemplate": "/discount/{productName}",
+            "UpstreamHttpMethod": [ "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/discount/getcoupon/{productName}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "discount.api",
+                    "Port": 8100
+                }
+            ],
+            "UpstreamPathTemplate": "/discount/{productName}",
+            "UpstreamHttpMethod": [ "GET" ],
+            "RateLimitOptions": {
+                "ClientWhiteList": [],
+                "EnableRateLimiting": true,
+                "Period": "5s",
+                "PeriodTimespan": 1,
+                "Limit": 1
+            },
+            "FileCacheOptions": {
+                "TtlSeconds": 30
+            }
+        },
+
+        {
+            "DownstreamPathTemplate": "/api/v1/discount",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 25570
+                }
+            ],
+            "UpstreamPathTemplate": "/discount",
+            "UpstreamHttpMethod": [ "PUT", "POST" ]
+        },
+
+        {
+            "DownstreamPathTemplate": "/api/v1/order/{userName}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8203
+                }
+            ],
+            "UpstreamPathTemplate": "/order/{userName}",
+            "UpstreamHttpMethod": [ "GET" ]
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "http://localhost:5068"
+    }
+}

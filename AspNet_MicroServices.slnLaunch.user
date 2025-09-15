@@ -1,0 +1,26 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "src\\Basket.Api\\Basket.Api.csproj",
+        "Action": "Start",
+        "DebugTarget": "Basket.Api"
+      },
+      {
+        "Path": "src\\Discount.api\\Discount.api.csproj",
+        "Action": "Start",
+        "DebugTarget": "Discount.api"
+      },
+      {
+        "Path": "src\\Discount.gRPC\\Discount.gRPC.csproj",
+        "Action": "Start",
+        "DebugTarget": "Discount.Grpc"
+      },
+      {
+        "Path": "src\\Ordering.Api\\Ordering.Api.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
