@@ -1,0 +1,70 @@
+﻿using Dapper;
+using Discount.api.Entities;
+using Npgsql;
+
+namespace Discount.api.Repositories
+{
+    public class DiscountRepository : IDiscountRepository
+    {
+        #region constructor
+        private readonly IConfiguration _configuration;
+        public DiscountRepository(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        #endregion
+
+        #region get coupon
+        public async Task<Coupon> GetDiscount(string productName)
+        {
+            var connection = new
+                NpgsqlConnection(_configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
+            var coupon = await connection.QueryFirstOrDefaultAsync<Coupon>
+                ("SELECT * FROM Coupon WHERE ProductName = @ProductName", new { ProductName = productName });
+            if (coupon == null)
+            {
+                return new Coupon { ProductName = "No Discount", Amount = 0, Description = "No Description" };
+            }
+            return coupon;
+        }
+        #endregion
+
+        #region create coupon
+        public async Task<bool> CreateDiscount(Coupon coupon)
+        {
+            var connection = new
+                NpgsqlConnection(_configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
+            var affected = await connection.ExecuteAsync
+               ("INSERT INTO Coupon (ProductName,Description,Amount) VALUES (@ProductName,@Description,@Amount)"
+               , new { ProductName = coupon.ProductName, Description = coupon.Description, Amount = coupon.Amount });
+            if (affected == 0) return false;
+            return true;
+        }
+        #endregion
+
+        #region edit coupon
+        public async Task<bool> UpdateDiscount(Coupon coupon)
+        {
+            var connection = new NpgsqlConnection
+                (_configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
+            var affected = await connection.ExecuteAsync
+                ("UPDATE Coupon SET ProductName=@ProductName,Description=@Description,Amount=@Amount"
+                 , new { ProductName = coupon.ProductName, Description = coupon.Description, Amount = coupon.Amount });
+            if(affected == 0) return false;
+            return true;
+        }
+        #endregion
+
+        #region delete coupon
+        public async Task<bool> DeleteDiscount(string productName)
+        {
+            var connection = new NpgsqlConnection
+                (_configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
+            var affected = await connection.ExecuteAsync
+                ("DELETE FROM Coupon WHERE ProductName = @ProductName", new { ProductName = productName });
+            if (affected == 0) return false;
+            return true;
+        }
+        #endregion
+    }
+}
